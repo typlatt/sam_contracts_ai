@@ -87,6 +87,10 @@ def batch_texts_by_token_limit(
 # === Build FAISS Index ===
 def build_index(embeddings: List[List[float]]) -> faiss.IndexFlatL2:
     dim = len(embeddings[0])
+    # TODO: Handle case where embeddings are empty
+    # TODO: Update embedding to use cosine similarity that works better with NLP tasks. First, we need to normalize the embeddings.
+    ###### faiss.normalize_L2(np.array(embeddings).astype("float32"))  # type: ignore
+    ###### faiss.IndexFlatIP(dim)  # Use Inner Product for cosine similarity
     index = faiss.IndexFlatL2(dim)
     index.add(np.array(embeddings).astype("float32"))  # type: ignore
     return index
